@@ -7,7 +7,7 @@
 ![Docker](https://img.shields.io/badge/Docker-Container-blue?style=flat-square&logo=docker)
 ![Render](https://img.shields.io/badge/Render-Deployed-black?style=flat-square&logo=render)
 
-Sistema backend para la gestión de reservas y servicios (**Bookify / Reserva PLUS**), desarrollado como parte del **Sprint 1** para el módulo de Arquitectura de Software en Fábrica de Software (Universidad de Antioquia).
+Sistema backend para la gestión de reservas y servicios (**Bookify / Reserva PLUS**), desarrollado como parte del **Sprint 2** para el módulo de Arquitectura de Software en Fábrica de Software (Universidad de Antioquia).
 
 ## 🏗 Arquitectura
 
@@ -25,6 +25,8 @@ El proyecto está diseñado bajo los principios de la **Arquitectura Hexagonal (
 - **Base de Datos:** PostgreSQL gestionado en Supabase (Conexión mediante Transaction Pooler puerto 6543 y SSL).
 - **Despliegue:** Contenedor Docker desplegado automáticamente en Render.
 - **Testing:** JUnit (Pruebas unitarias) y Postman (Pruebas de integración End-to-End).
+- **CI/CD:** GitHub Actions para integración continua y automatización.
+- **Calidad y Seguridad:** SonarCloud (Análisis estático de código).
 
 ## ⚙️ Funcionalidades Implementadas (Sprint 1)
 
@@ -32,9 +34,16 @@ El sistema expone una API RESTful con los siguientes endpoints principales:
 
 - **Catálogo de Servicios:** `GET /api/v1/catalog/services`
 - **Gestión de Disponibilidad:** `POST /api/v1/disponibilidades`
-- **Creación de Reservas (HU-03):** `POST /api/v1/bookings`
-- **Cancelación de Reservas (HU-04):** `PATCH /api/v1/bookings/{id}/cancel`
+- **Creación de Reservas:** `POST /api/v1/bookings`
+- **Cancelación de Reservas:** `PATCH /api/v1/bookings/{id}/cancel`
 - **Historial de Reservas por Cliente:** `GET /api/v1/reservas/historial` (Requiere Header `X-Cliente-Id`)
+- **Registro de Usuario:** `POST /api/v1/auth/register`
+- **Autenticación:** `POST /api/v1/auth/login` (Implementa validación JWT y bloqueo de cuentas retornando HTTP 429 con `Retry-After`).
+- **Control de Acceso:** Protección global de endpoints según el rol del usuario (Devuelve `401 Unauthorized` o `403 Forbidden`).
+- **Creación de Perfiles Comerciales:** `POST /api/v1/comercio/perfil`
+- **Registro de Recursos:** `POST /api/v1/comercio/recursos`
+- **Gestión de Días No Laborables:** `POST /api/v1/dias-no-laborables` (Incluye simulación de impacto en `/previsualizar`).
+- **Configuración de Disponibilidad:** `POST /api/v1/disponibilidades` (Previene el traslape de horarios para una misma agenda).
 
 ## 🛠️ Ejecución Local
 
